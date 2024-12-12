@@ -226,6 +226,20 @@ export const telegramCategories: TelegramCategory[] = [
         ],
         returns: 'True on success',
       },
+      {
+        name: 'getChatAdministrators',
+        description: 'Get a list of administrators in a chat',
+        category: 'groups',
+        parameters: [
+          {
+            name: 'chat_id',
+            type: 'number | string',
+            required: true,
+            description: 'Unique identifier for the target chat',
+          },
+        ],
+        returns: 'Array of chat administrators',
+      },
     ],
   },
   {
@@ -267,7 +281,132 @@ export const telegramCategories: TelegramCategory[] = [
         ],
         returns: 'StickerSet object',
       },
+      {
+        name: 'uploadStickerFile',
+        description: 'Upload a sticker file to the bot',
+        category: 'stickers',
+        parameters: [
+          {
+            name: 'user_id',
+            type: 'number',
+            required: true,
+            description: 'User identifier for sending the sticker',
+          },
+          {
+            name: 'sticker',
+            type: 'file',
+            required: true,
+            description: 'File to upload',
+          },
+        ],
+        returns: 'File object',
+      },
     ],
   },
-  // Add more categories and methods...
+  {
+    id: 'files',
+    name: 'File Methods',
+    description: 'Send and manage files',
+    methods: [
+      {
+        name: 'sendDocument',
+        description: 'Sends a file as a document',
+        category: 'files',
+        parameters: [
+          {
+            name: 'chat_id',
+            type: 'number | string',
+            required: true,
+            description: 'Unique identifier for the target chat',
+          },
+          {
+            name: 'document',
+            type: 'string | file',
+            required: true,
+            description: 'File to send, either a file identifier or a file to upload',
+          },
+        ],
+        returns: 'Message object',
+      },
+      {
+        name: 'getFile',
+        description: 'Get information about a file',
+        category: 'files',
+        parameters: [
+          {
+            name: 'file_id',
+            type: 'string',
+            required: true,
+            description: 'Unique identifier for the file',
+          },
+        ],
+        returns: 'File object',
+      },
+    ],
+  },
+  {
+    id: 'payments',
+    name: 'Payment Methods',
+    description: 'Handle payments and invoices',
+    methods: [
+      {
+        name: 'sendInvoice',
+        description: 'Send an invoice to the user',
+        category: 'payments',
+        parameters: [
+          {
+            name: 'chat_id',
+            type: 'number | string',
+            required: true,
+            description: 'Unique identifier for the target chat',
+          },
+          {
+            name: 'title',
+            type: 'string',
+            required: true,
+            description: 'Title of the invoice',
+          },
+          {
+            name: 'description',
+            type: 'string',
+            required: true,
+            description: 'Description of the invoice',
+          },
+          {
+            name: 'payload',
+            type: 'string',
+            required: true,
+            description: 'Invoice payload',
+          },
+          {
+            name: 'provider_token',
+            type: 'string',
+            required: true,
+            description: 'Payment provider token',
+          },
+        ],
+        returns: 'Invoice object',
+      },
+      {
+        name: 'answerPreCheckoutQuery',
+        description: 'Answer pre-checkout query from the user',
+        category: 'payments',
+        parameters: [
+          {
+            name: 'pre_checkout_query_id',
+            type: 'string',
+            required: true,
+            description: 'Unique identifier for the pre-checkout query',
+          },
+          {
+            name: 'ok',
+            type: 'boolean',
+            required: true,
+            description: 'True if the payment can be processed, false otherwise',
+          },
+        ],
+        returns: 'True on success',
+      },
+    ],
+  },
 ];
