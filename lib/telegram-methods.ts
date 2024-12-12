@@ -27,6 +27,46 @@ export const telegramCategories: TelegramCategory[] = [
         parameters: [],
         returns: 'True on success',
       },
+      {
+        name: 'setWebhook',
+        description: 'Sets a webhook for receiving updates',
+        category: 'bot',
+        parameters: [
+          {
+            name: 'url',
+            type: 'string',
+            required: true,
+            description: 'URL to send updates to',
+          },
+          {
+            name: 'max_connections',
+            type: 'number',
+            required: false,
+            description: 'Maximum allowed number of simultaneous HTTPS connections to the webhook',
+          },
+          {
+            name: 'allowed_updates',
+            type: 'Array<string>',
+            required: false,
+            description: 'List of update types to receive',
+          },
+        ],
+        returns: 'True on success',
+      },
+      {
+        name: 'deleteWebhook',
+        description: 'Deletes the webhook, switching to getUpdates',
+        category: 'bot',
+        parameters: [],
+        returns: 'True on success',
+      },
+      {
+        name: 'getWebhookInfo',
+        description: 'Returns information about the current webhook status',
+        category: 'bot',
+        parameters: [],
+        returns: 'WebhookInfo object',
+      },
     ],
   },
   {
@@ -112,78 +152,10 @@ export const telegramCategories: TelegramCategory[] = [
         ],
         returns: 'Message object',
       },
-    ],
-  },
-  {
-    id: 'users',
-    name: 'User Methods',
-    description: 'Manage users and user data',
-    methods: [
       {
-        name: 'getUserProfilePhotos',
-        description: 'Returns the profile photos of a user',
-        category: 'users',
-        parameters: [
-          {
-            name: 'user_id',
-            type: 'number',
-            required: true,
-            description: 'Unique identifier for the target user',
-          },
-          {
-            name: 'offset',
-            type: 'number',
-            required: false,
-            description: 'Sequential number of the first photo to return',
-          },
-          {
-            name: 'limit',
-            type: 'number',
-            required: false,
-            description: 'Limits the number of returned photos',
-          },
-        ],
-        returns: 'UserProfilePhotos object',
-      },
-      {
-        name: 'getUserProfilePhotosCount',
-        description: 'Gets the number of profile photos of a user',
-        category: 'users',
-        parameters: [
-          {
-            name: 'user_id',
-            type: 'number',
-            required: true,
-            description: 'Unique identifier for the target user',
-          },
-        ],
-        returns: 'Number of photos (integer)',
-      },
-    ],
-  },
-  {
-    id: 'groups',
-    name: 'Group Methods',
-    description: 'Manage group chats and their settings',
-    methods: [
-      {
-        name: 'getChatMembersCount',
-        description: 'Gets the number of members in a group chat',
-        category: 'groups',
-        parameters: [
-          {
-            name: 'chat_id',
-            type: 'number | string',
-            required: true,
-            description: 'Unique identifier for the target chat',
-          },
-        ],
-        returns: 'Integer representing the number of members',
-      },
-      {
-        name: 'banChatMember',
-        description: 'Bans a user from a group chat',
-        category: 'groups',
+        name: 'deleteMessage',
+        description: 'Deletes a message',
+        category: 'messages',
         parameters: [
           {
             name: 'chat_id',
@@ -192,24 +164,18 @@ export const telegramCategories: TelegramCategory[] = [
             description: 'Unique identifier for the target chat',
           },
           {
-            name: 'user_id',
+            name: 'message_id',
             type: 'number',
             required: true,
-            description: 'Unique identifier for the target user',
-          },
-          {
-            name: 'until_date',
-            type: 'number',
-            required: false,
-            description: 'Date when the user will be unbanned (Unix timestamp)',
+            description: 'Message identifier of the message to delete',
           },
         ],
         returns: 'True on success',
       },
       {
-        name: 'unbanChatMember',
-        description: 'Unbans a user from a group chat',
-        category: 'groups',
+        name: 'sendPhoto',
+        description: 'Sends a photo',
+        category: 'messages',
         parameters: [
           {
             name: 'chat_id',
@@ -218,129 +184,60 @@ export const telegramCategories: TelegramCategory[] = [
             description: 'Unique identifier for the target chat',
           },
           {
-            name: 'user_id',
-            type: 'number',
-            required: true,
-            description: 'Unique identifier for the target user',
-          },
-        ],
-        returns: 'True on success',
-      },
-      {
-        name: 'getChatAdministrators',
-        description: 'Get a list of administrators in a chat',
-        category: 'groups',
-        parameters: [
-          {
-            name: 'chat_id',
-            type: 'number | string',
-            required: true,
-            description: 'Unique identifier for the target chat',
-          },
-        ],
-        returns: 'Array of chat administrators',
-      },
-    ],
-  },
-  {
-    id: 'stickers',
-    name: 'Sticker Methods',
-    description: 'Send and manage stickers',
-    methods: [
-      {
-        name: 'sendSticker',
-        description: 'Sends a sticker',
-        category: 'stickers',
-        parameters: [
-          {
-            name: 'chat_id',
-            type: 'number | string',
-            required: true,
-            description: 'Unique identifier for the target chat',
-          },
-          {
-            name: 'sticker',
-            type: 'string',
-            required: true,
-            description: 'File identifier or URL of the sticker to send',
-          },
-        ],
-        returns: 'Message object',
-      },
-      {
-        name: 'getStickerSet',
-        description: 'Get information about a sticker set',
-        category: 'stickers',
-        parameters: [
-          {
-            name: 'name',
-            type: 'string',
-            required: true,
-            description: 'Name of the sticker set',
-          },
-        ],
-        returns: 'StickerSet object',
-      },
-      {
-        name: 'uploadStickerFile',
-        description: 'Upload a sticker file to the bot',
-        category: 'stickers',
-        parameters: [
-          {
-            name: 'user_id',
-            type: 'number',
-            required: true,
-            description: 'User identifier for sending the sticker',
-          },
-          {
-            name: 'sticker',
-            type: 'file',
-            required: true,
-            description: 'File to upload',
-          },
-        ],
-        returns: 'File object',
-      },
-    ],
-  },
-  {
-    id: 'files',
-    name: 'File Methods',
-    description: 'Send and manage files',
-    methods: [
-      {
-        name: 'sendDocument',
-        description: 'Sends a file as a document',
-        category: 'files',
-        parameters: [
-          {
-            name: 'chat_id',
-            type: 'number | string',
-            required: true,
-            description: 'Unique identifier for the target chat',
-          },
-          {
-            name: 'document',
+            name: 'photo',
             type: 'string | file',
             required: true,
-            description: 'File to send, either a file identifier or a file to upload',
+            description: 'File identifier or URL of the photo to send',
           },
         ],
         returns: 'Message object',
       },
+    ],
+  },
+  {
+    id: 'webhooks',
+    name: 'Webhook Methods',
+    description: 'Handle webhooks for bot updates',
+    methods: [
       {
-        name: 'getFile',
-        description: 'Get information about a file',
-        category: 'files',
+        name: 'setWebhook',
+        description: 'Sets a webhook to receive updates',
+        category: 'webhooks',
         parameters: [
           {
-            name: 'file_id',
+            name: 'url',
             type: 'string',
             required: true,
-            description: 'Unique identifier for the file',
+            description: 'The URL where updates will be sent',
+          },
+          {
+            name: 'max_connections',
+            type: 'number',
+            required: false,
+            description: 'Maximum allowed number of simultaneous HTTPS connections to the webhook',
+          },
+          {
+            name: 'allowed_updates',
+            type: 'Array<string>',
+            required: false,
+            description: 'List of update types to receive',
           },
         ],
-        returns: 'File object',
+        returns: 'True on success',
+      },
+      {
+        name: 'deleteWebhook',
+        description: 'Deletes the webhook, switching to getUpdates',
+        category: 'webhooks',
+        parameters: [],
+        returns: 'True on success',
+      },
+      {
+        name: 'getWebhookInfo',
+        description: 'Returns information about the current webhook status',
+        category: 'webhooks',
+        parameters: [],
+        returns: 'WebhookInfo object',
       },
     ],
   },
@@ -351,7 +248,7 @@ export const telegramCategories: TelegramCategory[] = [
     methods: [
       {
         name: 'sendInvoice',
-        description: 'Send an invoice to the user',
+        description: 'Sends an invoice to the user',
         category: 'payments',
         parameters: [
           {
@@ -406,6 +303,73 @@ export const telegramCategories: TelegramCategory[] = [
           },
         ],
         returns: 'True on success',
+      },
+      {
+        name: 'sendPaymentForm',
+        description: 'Send a payment form for a user to fill',
+        category: 'payments',
+        parameters: [
+          {
+            name: 'chat_id',
+            type: 'number | string',
+            required: true,
+            description: 'Unique identifier for the target chat',
+          },
+          {
+            name: 'provider_token',
+            type: 'string',
+            required: true,
+            description: 'Payment provider token',
+          },
+        ],
+        returns: 'True on success',
+      },
+    ],
+  },
+  {
+    id: 'users',
+    name: 'User Methods',
+    description: 'Manage users and user data',
+    methods: [
+      {
+        name: 'getUserProfilePhotos',
+        description: 'Returns the profile photos of a user',
+        category: 'users',
+        parameters: [
+          {
+            name: 'user_id',
+            type: 'number',
+            required: true,
+            description: 'Unique identifier for the target user',
+          },
+          {
+            name: 'offset',
+            type: 'number',
+            required: false,
+            description: 'Sequential number of the first photo to return',
+          },
+          {
+            name: 'limit',
+            type: 'number',
+            required: false,
+            description: 'Limits the number of returned photos',
+          },
+        ],
+        returns: 'UserProfilePhotos object',
+      },
+      {
+        name: 'getUserProfilePhotosCount',
+        description: 'Gets the number of profile photos of a user',
+        category: 'users',
+        parameters: [
+          {
+            name: 'user_id',
+            type: 'number',
+            required: true,
+            description: 'Unique identifier for the target user',
+          },
+        ],
+        returns: 'Number of photos (integer)',
       },
     ],
   },
