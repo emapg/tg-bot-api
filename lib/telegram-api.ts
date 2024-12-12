@@ -36,9 +36,92 @@ export class TelegramAPI {
     return this.request('getMe');
   }
 
-  async sendMessage(params: { chat_id: number | string; text: string }) {
+  async setWebhook(params: { url: string; max_connections?: number; allowed_updates?: string[] }) {
+    return this.request('setWebhook', params);
+  }
+
+  async deleteWebhook() {
+    return this.request('deleteWebhook');
+  }
+
+  async getWebhookInfo() {
+    return this.request('getWebhookInfo');
+  }
+
+  async logOut() {
+    return this.request('logOut');
+  }
+
+  async close() {
+    return this.request('close');
+  }
+
+  // Message Methods
+  async sendMessage(params: { chat_id: number | string; text: string; parse_mode?: string }) {
     return this.request('sendMessage', params);
   }
 
-  // Add more method implementations as needed
+  async forwardMessage(params: { chat_id: number | string; from_chat_id: number | string; message_id: number }) {
+    return this.request('forwardMessage', params);
+  }
+
+  async editMessageText(params: { chat_id: number | string; message_id: number; text: string }) {
+    return this.request('editMessageText', params);
+  }
+
+  async deleteMessage(params: { chat_id: number | string; message_id: number }) {
+    return this.request('deleteMessage', params);
+  }
+
+  async sendPhoto(params: { chat_id: number | string; photo: string | File }) {
+    return this.request('sendPhoto', params);
+  }
+
+  // Payment Methods
+  async sendInvoice(params: {
+    chat_id: number | string;
+    title: string;
+    description: string;
+    payload: string;
+    provider_token: string;
+    start_parameter?: string;
+    currency?: string;
+    prices: any[];
+    max_tip_amount?: number;
+    suggested_tip_amounts?: number[];
+  }) {
+    return this.request('sendInvoice', params);
+  }
+
+  async answerPreCheckoutQuery(params: { pre_checkout_query_id: string; ok: boolean }) {
+    return this.request('answerPreCheckoutQuery', params);
+  }
+
+  async sendPaymentForm(params: { chat_id: number | string; provider_token: string }) {
+    return this.request('sendPaymentForm', params);
+  }
+
+  // User Methods
+  async getUserProfilePhotos(params: { user_id: number; offset?: number; limit?: number }) {
+    return this.request('getUserProfilePhotos', params);
+  }
+
+  async getUserProfilePhotosCount(params: { user_id: number }) {
+    return this.request('getUserProfilePhotos', params);
+  }
+
+  // Webhook Methods
+  async setWebhookInfo(params: { url: string; max_connections?: number; allowed_updates?: string[] }) {
+    return this.request('setWebhook', params);
+  }
+
+  async deleteWebhook() {
+    return this.request('deleteWebhook');
+  }
+
+  async getWebhookStatus() {
+    return this.request('getWebhookInfo');
+  }
+
+  // Additional Methods as needed...
 }
